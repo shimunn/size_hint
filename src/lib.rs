@@ -26,6 +26,7 @@ where
 
     #[inline]
     fn next(&mut self) -> Option<Self::Item> {
+        self.hint -= 1;
         self.iter.next()
     }
 
@@ -52,6 +53,6 @@ mod tests {
         let i = i.map(|a| a + 1).hint_size(max * 3);
         assert_eq!(i.size_hint(), (max * 3, Some(max)));
         let numbers: Vec<_> = i.collect();
-        assert_eq!(numbers.capacity(), max * 3 + 1);
+        assert_eq!(numbers.capacity(), max * 3);
     }
 }
