@@ -26,7 +26,9 @@ where
 
     #[inline]
     fn next(&mut self) -> Option<Self::Item> {
-        self.hint -= 1;
+        if self.hint > 0 {
+            self.hint -= 1;
+        }
         self.iter.next()
     }
 
@@ -41,6 +43,7 @@ where
 mod tests {
 
     use crate::HintSize;
+    use std::iter::successors;
 
     #[test]
     fn simple() {
@@ -54,5 +57,16 @@ mod tests {
         assert_eq!(i.size_hint(), (max * 3, Some(max)));
         let numbers: Vec<_> = i.collect();
         assert_eq!(numbers.capacity(), max * 3);
+    }
+
+    #[test]
+    fn underflow() {
+        let i = successors(Some(0), |prev| match prev {
+            counter if *counter < 10 => Some(counter + 1),
+            _ => None,
+        })
+        .hint_size(5);
+        let numbers: Vec<_> = i.collect();
+        assert_eq!(numbers.len(), 11);
     }
 }
