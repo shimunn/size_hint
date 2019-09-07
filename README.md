@@ -1,4 +1,4 @@
-# size_hint
+# size_hint [![Crates.io Version](https://img.shields.io/crates/v/size_hint.svg)](https://crates.io/crates/size_hint)
 
 A very simple library to provide a size_hint for an iterator which does not provide it's own such as std::iter::{from_fn, successors}
 
