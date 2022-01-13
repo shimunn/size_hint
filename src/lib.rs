@@ -34,8 +34,14 @@ where
 
     #[inline]
     fn size_hint(&self) -> (usize, Option<usize>) {
-        let (_approx, exact) = self.iter.size_hint();
-        (self.hint, exact)
+        match self.iter.size_hint() {
+            (_lower, Some(upper)) if self.hint > upper => {
+                 (self.hint, None)
+            },
+            (_lower, upper) => {
+                (self.hint, upper)
+            },
+        }
     }
 }
 
