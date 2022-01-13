@@ -58,9 +58,9 @@ mod tests {
         let i = numbers.into_iter();
         assert_eq!(i.size_hint(), (max, Some(max)));
         let i = i.hint_size(max * 2);
-        assert_eq!(i.size_hint(), (max * 2, Some(max)));
+        assert_eq!(i.size_hint(), (max * 2, None));
         let i = i.map(|a| a + 1).hint_size(max * 3);
-        assert_eq!(i.size_hint(), (max * 3, Some(max)));
+        assert_eq!(i.size_hint(), (max * 3, None));
         let numbers: Vec<_> = i.collect();
         assert_eq!(numbers.capacity(), max * 3);
     }
