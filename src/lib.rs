@@ -16,7 +16,10 @@ pub trait HintSize {
     }
 }
 
-impl<I> HintSize for I {}
+impl<I> HintSize for I
+where
+    I: Iterator + Sized,
+{}
 
 impl<I> Iterator for SizeHint<I>
 where
